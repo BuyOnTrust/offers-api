@@ -236,31 +236,13 @@ __webpack_require__.r(__webpack_exports__);
 const mongoose = __webpack_require__(/*! mongoose */ "../../mongoose/index.js");
 
 const OfferSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    default: 'N/A',
-    required: true
-  },
-  type: {
-    type: String,
-    default: 'basic',
-    required: true
-  },
-  image: {
-    type: String,
-    default: 'https://cdn11.bigcommerce.com/s-90vdngbq7j/product_images/favicon.png?t=1561668788',
-    required: true
-  },
-  link: {
-    type: String,
-    default: 'N/A',
-    required: true
-  },
-  text: {
-    type: String,
-    default: 'N/A',
-    required: true
-  },
+  name: String,
+  pid: [Number],
+  page: String,
+  type: String,
+  image: String,
+  link: String,
+  text: String,
   click_count: {
     type: Number,
     default: 0,

@@ -120,11 +120,13 @@ const offer = async (event, context) => {
     }
 
     ;
-    offer.name = data.name || offer.name;
-    offer.type = data.type || offer.type;
-    offer.image = data.image || offer.image;
-    offer.link = data.link || offer.link;
-    offer.text = data.text || offer.text;
+    offer.name = data.name || offer.name || 'N/A';
+    offer.pid = data.pid || offer.pid || [0];
+    offer.type = data.type || offer.type || 'N/A';
+    offer.page = data.page || offer.page || 'N/A';
+    offer.image = data.image || offer.image || 'N/A';
+    offer.link = data.link || offer.link || 'N/A';
+    offer.text = data.text || offer.text || 'N/A';
     offer.save(err => {
       if (err) return Object(_libs_response_lib__WEBPACK_IMPORTED_MODULE_3__["failure"])({
         status: false,
@@ -254,31 +256,13 @@ __webpack_require__.r(__webpack_exports__);
 const mongoose = __webpack_require__(/*! mongoose */ "../../mongoose/index.js");
 
 const OfferSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    default: 'N/A',
-    required: true
-  },
-  type: {
-    type: String,
-    default: 'basic',
-    required: true
-  },
-  image: {
-    type: String,
-    default: 'https://cdn11.bigcommerce.com/s-90vdngbq7j/product_images/favicon.png?t=1561668788',
-    required: true
-  },
-  link: {
-    type: String,
-    default: 'N/A',
-    required: true
-  },
-  text: {
-    type: String,
-    default: 'N/A',
-    required: true
-  },
+  name: String,
+  pid: [Number],
+  page: String,
+  type: String,
+  image: String,
+  link: String,
+  text: String,
   click_count: {
     type: Number,
     default: 0,

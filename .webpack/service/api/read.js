@@ -90,12 +90,13 @@
 /*!***************************************************************************!*\
   !*** /Users/admin/Code/work/repos/BuyOnTrust/APIs/offers-api/api/read.js ***!
   \***************************************************************************/
-/*! exports provided: getAllOffers */
+/*! exports provided: getAllOffers, getPageOffers */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAllOffers", function() { return getAllOffers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPageOffers", function() { return getPageOffers; });
 /* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! source-map-support/register */ "../../source-map-support/register.js");
 /* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(source_map_support_register__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../db */ "../../../db.js");
@@ -114,6 +115,25 @@ async function getAllOffers(context) {
       name: {
         $exists: true
       }
+    });
+    return Object(_libs_response_lib__WEBPACK_IMPORTED_MODULE_3__["success"])(offers);
+  } catch (err) {
+    console.log('Error getting all offers:', err);
+    return Object(_libs_response_lib__WEBPACK_IMPORTED_MODULE_3__["failure"])({
+      status: false,
+      body: err
+    });
+  }
+}
+;
+async function getPageOffers(event, context) {
+  context.callbackWaitsForEmptyEventLoop = false;
+  const page = event.pathParameters.page;
+
+  try {
+    await Object(_db__WEBPACK_IMPORTED_MODULE_1__["default"])();
+    const offers = await _models_Offer__WEBPACK_IMPORTED_MODULE_2__["default"].find({
+      page: page
     });
     return Object(_libs_response_lib__WEBPACK_IMPORTED_MODULE_3__["success"])(offers);
   } catch (err) {
@@ -239,31 +259,13 @@ __webpack_require__.r(__webpack_exports__);
 const mongoose = __webpack_require__(/*! mongoose */ "../../mongoose/index.js");
 
 const OfferSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    default: 'N/A',
-    required: true
-  },
-  type: {
-    type: String,
-    default: 'basic',
-    required: true
-  },
-  image: {
-    type: String,
-    default: 'https://cdn11.bigcommerce.com/s-90vdngbq7j/product_images/favicon.png?t=1561668788',
-    required: true
-  },
-  link: {
-    type: String,
-    default: 'N/A',
-    required: true
-  },
-  text: {
-    type: String,
-    default: 'N/A',
-    required: true
-  },
+  name: String,
+  pid: [Number],
+  page: String,
+  type: String,
+  image: String,
+  link: String,
+  text: String,
   click_count: {
     type: Number,
     default: 0,

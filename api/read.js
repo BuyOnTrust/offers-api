@@ -20,3 +20,22 @@ export async function getAllOffers(context) {
         });
     }
 };
+
+export async function getPageOffers(event, context) {
+    context.callbackWaitsForEmptyEventLoop = false;
+    const page = event.pathParameters.page;
+    try {
+        await connectToDatabase();
+        const offers = await Offer.find({
+            page: page
+        });
+
+        return success(offers);
+    } catch (err) {
+        console.log('Error getting all offers:', err);
+        return failure({
+            status: false,
+            body: err
+        });
+    }
+};

@@ -15,11 +15,13 @@ export const offer = async(event, context) => {
             throw new Error('There is no offer found with ID:', offerId);
         };
 
-        offer.name = data.name || offer.name;
-        offer.type = data.type || offer.type;
-        offer.image = data.image || offer.image;
-        offer.link = data.link || offer.link;
-        offer.text = data.text || offer.text;
+        offer.name = data.name || offer.name || 'N/A';
+        offer.pid = data.pid || offer.pid || [0];
+        offer.type = data.type || offer.type || 'N/A';
+        offer.page = data.page || offer.page || 'N/A';
+        offer.image = data.image || offer.image || 'N/A';
+        offer.link = data.link || offer.link || 'N/A';
+        offer.text = data.text || offer.text || 'N/A';
         offer.save((err) => {
             if (err) return failure({ status: false, body: err });
         });

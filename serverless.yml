@@ -49,6 +49,13 @@ functions:
           path: api/offers
           method: get
           cors: true
+  getPageOffers:
+    handler: api/read.getPageOffers
+    events:
+      - http:
+          path: api/offers/{page}
+          method: get
+          cors: true
 # UPDATE
   updateOffer:
     handler: api/update.offer
